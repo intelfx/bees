@@ -21,6 +21,9 @@ UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ## Mount options
 # MOUNT_OPTIONS=""
 
+## Directories to exclude from scanning (recursively), relative to the filesystem root
+# EXCLUDE_DIRS=()
+
 ## Bees DB size
 # Hash Table Sizing
 # sHash table entries are 16 bytes each

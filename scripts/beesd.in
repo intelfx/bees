@@ -113,6 +113,14 @@ mkdir -p "$MNT_DIR" || exit 1
 
 mount --make-private -osubvolid=5 -o "$MOUNT_OPTIONS" /dev/disk/by-uuid/$UUID "$MNT_DIR" || exit 1
 
+for dir in "${EXCLUDE_DIRS[@]}"; do
+    abs="$(realpath -qm "$MNT_DIR/$d")"
+    if [ "${abs#$MNT_DIR/}" == "$abs" ]]; then
+        ERRO "Bad exclude path: $dir (does not point inside the filesystem)"
+    fi
+    mount --make-private -t tmpfs tmpfs "$abs" || exit 1
+done
+
 if [ ! -d "$BEESHOME" ]; then
     INFO "Create subvol $BEESHOME for store bees data"
     btrfs sub cre "$BEESHOME"
